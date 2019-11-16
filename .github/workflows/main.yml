@@ -20,9 +20,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy
+          args: deploy --only hosting:prod
         env:
           FIREBASE_TOKEN: 1//0988KyW6r8JiKCgYIARAAGAkSNwF-L9IrifoUJyaSw1Qwaz2cNDGBg2uIQevJY6nEzmmvJkzh6RsarF6Q06PCdlucgI2Q9_UdnS4
