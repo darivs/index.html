@@ -7,11 +7,14 @@
   >
     <v-col cols="12" align-self="end">
       <v-row justify="center">
-        <v-img
-          class="dr1s elevation-12 mt-5"
-          contain
-          :src="require('~/static/dr1s.jpg')"
-        />
+        <v-hover v-slot:default="{ hover }">
+          <v-img
+            :class="`dr1s transition elevation-12 ma-${hover ? '10' : '0'}`"
+            contain
+            :style="`transform: rotate(${hover ? '30' : '0'}deg);'}`"
+            :src="require('~/static/dr1s.jpg')"
+          />
+        </v-hover>
         <v-col cols="12" md="dr1s" lg="lul">
           <v-row justify="center" align="center">
             <span class="display-1 font-weight-light my-3">
@@ -109,5 +112,6 @@ export default {
 .dr1s {
   max-width: 256px;
   border-radius: 100%;
+  cursor: pointer;
 }
 </style>

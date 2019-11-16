@@ -6,6 +6,14 @@
   animation: color-change 7.5s infinite;
 }
 
+.transition {
+  -webkit-transition-property: transform, margin;
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: linear;
+  transition-property: transform, margin;
+  transition-duration: 0.2s;
+}
+
 @-webkit-keyframes color-change {
   5% {
     color: #1ed760;
