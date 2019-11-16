@@ -18,13 +18,14 @@
               DARIUS TACK
               <span class="display-2 font-weight-bold">//</span>
               <span class="rainbow font-weight-bold">dr1s</span>
+              <span class="display-2 font-weight-bold">//</span>
             </span>
           </v-row>
         </v-col>
       </v-row>
     </v-col>
     <v-fade-transition hide-on-leave>
-      <v-col v-show="!isLandscape" align-self="end">
+      <v-col v-show="false" align-self="end">
         <social-button-block
           v-for="medium in media"
           :key="medium.title"
@@ -33,7 +34,7 @@
       </v-col>
     </v-fade-transition>
     <v-fade-transition hide-on-leave>
-      <v-col v-show="isLandscape" align-self="start">
+      <v-col align-self="start">
         <v-row justify="center">
           <social-button-round
             v-for="medium in media"
