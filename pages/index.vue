@@ -1,5 +1,21 @@
 <template>
   <v-row style="height: 100%; width: 100%" align="center" justify="center">
+    <v-col cols="12" align-self="end">
+      <v-row justify="center">
+        <v-img
+          class="dr1s elevation-12"
+          contain
+          :src="require('~/assets/dr1s.jpg')"
+        />
+        <v-row justify="center" align="centerZ">
+          <span class="display-1 font-weight-light my-6"
+            >DARIUS
+            <span class="rainbow font-weight-bold accent--text">dr1s</span>
+            TACK
+          </span>
+        </v-row>
+      </v-row>
+    </v-col>
     <v-col align-self="end">
       <social-button
         v-for="medium in media"
@@ -49,5 +65,89 @@ export default {
 <style>
 .v-btn--block {
   border-radius: 0 !important;
+}
+
+.dr1s {
+  max-width: 75%;
+  border-radius: 100%;
+}
+
+.rainbow {
+  -webkit-animation: color-change 3s infinite;
+  -moz-animation: color-change 3s infinite;
+  -o-animation: color-change 3s infinite;
+  -ms-animation: color-change 3s infinite;
+  animation: color-change 3s infinite;
+}
+
+@-webkit-keyframes color-change {
+  0% {
+    color: #24d6ff;
+  }
+  25% {
+    color: white;
+  }
+  50% {
+    color: #ee4d2e;
+  }
+  100% {
+    color: #24d6ff;
+  }
+}
+@-moz-keyframes color-change {
+  0% {
+    color: #24d6ff;
+  }
+  25% {
+    color: white;
+  }
+  50% {
+    color: #ee4d2e;
+  }
+  100% {
+    color: #24d6ff;
+  }
+}
+@-ms-keyframes color-change {
+  0% {
+    color: #24d6ff;
+  }
+  25% {
+    color: white;
+  }
+  50% {
+    color: #ee4d2e;
+  }
+  100% {
+    color: #24d6ff;
+  }
+}
+@-o-keyframes color-change {
+  0% {
+    color: #24d6ff;
+  }
+  25% {
+    color: white;
+  }
+  50% {
+    color: #ee4d2e;
+  }
+  100% {
+    color: #24d6ff;
+  }
+}
+@keyframes color-change {
+  0% {
+    color: #24d6ff;
+  }
+  25% {
+    color: white;
+  }
+  50% {
+    color: #ee4d2e;
+  }
+  100% {
+    color: #24d6ff;
+  }
 }
 </style>

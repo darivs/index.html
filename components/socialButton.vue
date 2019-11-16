@@ -6,7 +6,8 @@
       :color="medium.color"
       large
       block
-      height="64px"
+      min-height="48px"
+      max-height="64px"
       elevation="0"
     >
       <v-col cols="2">
