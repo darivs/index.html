@@ -10,7 +10,7 @@
         <v-img
           class="dr1s elevation-12 mt-5"
           contain
-          :src="require('~/assets/dr1s.jpg')"
+          :src="require('~/static/dr1s.jpg')"
         />
         <v-col cols="12" md="dr1s" lg="lul">
           <v-row justify="center" align="center">
@@ -18,7 +18,6 @@
               DARIUS TACK
               <span class="display-2 font-weight-bold">//</span>
               <span class="rainbow font-weight-bold">dr1s</span>
-              <span class="display-2 font-weight-bold">//</span>
             </span>
           </v-row>
         </v-col>
@@ -60,25 +59,25 @@ export default {
       {
         title: "Spotify",
         url: "",
-        logo: require("~/assets/spotify_white.png"),
+        logo: require("~/static/spotify.png"),
         color: "#1ed760"
       },
       {
         title: "Soundcloud",
         url: "https://soundcloud.com/bauchtasche/",
-        logo: require("~/assets/soundcloud_white.png"),
+        logo: require("~/static/soundcloud.png"),
         color: "#ff8800"
       },
       {
         title: "GitHub",
         url: "https://github.com/darivs/",
-        logo: require("~/assets/github_white.png"),
+        logo: require("~/static/github.png"),
         color: "#000000"
       },
       {
         title: "Twitter",
         url: "https://twitter.com/eureExzellenz/",
-        logo: require("~/assets/twitter_white.png"),
+        logo: require("~/static/twitter.png"),
         color: "#1da1f2"
       }
     ],
