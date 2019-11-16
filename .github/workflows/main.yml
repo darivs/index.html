@@ -1,8 +1,8 @@
-name: CI
+name: CI/CD
 on: [push]
 jobs:
   build:
-    name: Lint
+    name: CI
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -12,3 +12,15 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: lint
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build
+  deploy:
+    name: CD
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:prod
