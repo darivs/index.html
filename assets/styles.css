@@ -7,11 +7,11 @@
 }
 
 .transition {
-  -webkit-transition-property: transform, margin;
-  -webkit-transition-duration: 0.2s;
+  -webkit-transition-property: margin, transform;
+  -webkit-transition-duration: 0.25s;
   -webkit-transition-timing-function: linear;
-  transition-property: transform, margin;
-  transition-duration: 0.2s;
+  transition-property: margin, transform;
+  transition-duration: 0.25s;
 }
 
 @-webkit-keyframes color-change {

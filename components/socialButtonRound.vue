@@ -1,6 +1,7 @@
 <template>
-  <v-hover>
+  <v-hover v-slot:default="{ hover }">
     <v-btn
+      class="transition mx-2"
       :href="medium.url"
       target="_blank"
       :color="medium.color"
@@ -10,12 +11,9 @@
       :min-width="`${size}px`"
       elevation="12"
       :style="
-        `opacity: ${
-          isSpotify ? '0.25' : '1'
-        }; transform: rotate(${degrees}deg);`
+        `opacity: ${isSpotify ? '0.25' : '1'};
+        transform: rotate(${hover ? '30' : '0'}deg);`
       "
-      @mouseover="degrees = isSpotify ? 0 : 45"
-      @mouseleave="degrees = 0"
     >
       <v-img :max-width="`${size * 0.55}px`" :src="medium.logo" />
     </v-btn>
@@ -44,7 +42,14 @@ export default {
     }
   },
   methods: {
-    rotate() {}
+    hover() {
+      this.degrees = this.isSpotify ? 0 : 45
+      this.$emit("marge")
+    },
+    dehover() {
+      this.degrees = 0
+      this.$emit("unmarge")
+    }
   }
 }
 </script>

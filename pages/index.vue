@@ -41,7 +41,6 @@
           <social-button-round
             v-for="medium in media"
             :key="medium.title"
-            class="mx-2"
             :medium="medium"
             :size="92"
           />
@@ -84,7 +83,8 @@ export default {
         color: "#1da1f2"
       }
     ],
-    isLandscape: undefined
+    isLandscape: undefined,
+    tempMargin: 2
   }),
   mounted() {
     this.onResize()
