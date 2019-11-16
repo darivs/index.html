@@ -7,7 +7,7 @@
     fab
     :min-height="`${size}px`"
     :min-width="`${size}px`"
-    elevation="0"
+    elevation="12"
   >
     <v-img :max-width="`${size * 0.6}px`" :src="medium.logo">
       <v-container fill-height>

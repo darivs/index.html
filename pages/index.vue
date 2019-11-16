@@ -8,7 +8,7 @@
     <v-col cols="12" align-self="end">
       <v-row justify="center">
         <v-img
-          class="dr1s elevation-12"
+          class="dr1s elevation-12 mt-5"
           contain
           :src="require('~/assets/dr1s.jpg')"
         />
@@ -23,15 +23,17 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-fade-transition>
-      <v-col v-if="!isLandscape" align-self="end">
+    <v-fade-transition hide-on-leave>
+      <v-col v-show="!isLandscape" align-self="end">
         <social-button-block
           v-for="medium in media"
           :key="medium.title"
           :medium="medium"
         />
       </v-col>
-      <v-col v-else align-self="start">
+    </v-fade-transition>
+    <v-fade-transition hide-on-leave>
+      <v-col v-show="isLandscape" align-self="start">
         <v-row justify="center">
           <social-button-round
             v-for="medium in media"
