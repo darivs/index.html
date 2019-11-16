@@ -1,5 +1,10 @@
 <template>
-  <v-row style="height: 100%; width: 100%" align="center" justify="center">
+  <v-row
+    v-resize="onResize"
+    style="height: 100%; width: 100%"
+    align="center"
+    justify="center"
+  >
     <v-col cols="12" align-self="end">
       <v-row justify="center">
         <v-img
@@ -7,30 +12,46 @@
           contain
           :src="require('~/assets/dr1s.jpg')"
         />
-        <v-row justify="center" align="centerZ">
-          <span class="display-1 font-weight-light my-6"
-            >DARIUS
-            <span class="rainbow font-weight-bold accent--text">dr1s</span>
-            TACK
-          </span>
-        </v-row>
+        <v-col cols="12" md="dr1s" lg="lul">
+          <v-row justify="center" align="center">
+            <span class="display-1 font-weight-light my-6"
+              >DARIUS
+              <span class="rainbow font-weight-bold accent--text">dr1s</span>
+              TACK
+            </span>
+          </v-row>
+        </v-col>
       </v-row>
     </v-col>
-    <v-col align-self="end">
-      <social-button
-        v-for="medium in media"
-        :key="medium.title"
-        :medium="medium"
-      />
-    </v-col>
+    <v-fade-transition>
+      <v-col v-if="!isLandscape" align-self="end">
+        <social-button-block
+          v-for="medium in media"
+          :key="medium.title"
+          :medium="medium"
+        />
+      </v-col>
+      <v-col v-else align-self="start">
+        <v-row justify="center">
+          <social-button-round
+            v-for="medium in media"
+            :key="medium.title"
+            class="mx-2"
+            :medium="medium"
+            :size="128"
+          />
+        </v-row>
+      </v-col>
+    </v-fade-transition>
   </v-row>
 </template>
 
 <script>
-import SocialButton from "../components/socialButton"
+import SocialButtonBlock from "../components/socialButtonBlock"
+import SocialButtonRound from "../components/socialButtonRound"
 
 export default {
-  components: { SocialButton },
+  components: { SocialButtonRound, SocialButtonBlock },
   data: () => ({
     media: [
       {
@@ -57,8 +78,17 @@ export default {
         logo: require("~/assets/twitter_white.png"),
         color: "#1da1f2"
       }
-    ]
-  })
+    ],
+    isLandscape: undefined
+  }),
+  mounted() {
+    this.onResize()
+  },
+  methods: {
+    onResize() {
+      this.isLandscape = window.innerWidth > window.innerHeight
+    }
+  }
 }
 </script>
 
@@ -67,8 +97,15 @@ export default {
   border-radius: 0 !important;
 }
 
+.container,
+.col,
+.row {
+  padding: 0;
+  margin: 0;
+}
+
 .dr1s {
-  max-width: 75%;
+  max-width: 256px;
   border-radius: 100%;
 }
 

@@ -6,7 +6,7 @@
       :color="medium.color"
       large
       block
-      min-height="48px"
+      min-height="64px"
       max-height="64px"
       elevation="0"
     >
@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: "SocialButton",
+  name: "SocialButtonBlock",
   props: {
     medium: {
       type: Object,
