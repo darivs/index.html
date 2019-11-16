@@ -1,15 +1,23 @@
 <template>
   <v-app>
     <v-content>
-      <v-container>
+      <v-container fluid fill-height>
         <nuxt />
       </v-container>
     </v-content>
   </v-app>
 </template>
 
-<script>
-export default {
-  data: () => ({})
+<style>
+html,
+body {
+  overflow: hidden;
 }
-</script>
+
+.container,
+.col,
+.row {
+  padding: 0;
+  margin: 0;
+}
+</style>
