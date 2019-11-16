@@ -1,0 +1,94 @@
+
+.rainbow {
+  -webkit-animation: color-change 3s infinite;
+  -moz-animation: color-change 3s infinite;
+  -o-animation: color-change 3s infinite;
+  -ms-animation: color-change 3s infinite;
+  animation: color-change 3s infinite;
+}
+
+@-webkit-keyframes color-change {
+  5% {
+    color: #1ed760;
+  }
+  20% {
+    color: #ff8800;
+  }
+  50% {
+    color: #1da1f2;
+  }
+  80% {
+    color: #ff8800;
+  }
+  95% {
+    color: #1ed760;
+  }
+}
+@-moz-keyframes color-change {
+  0% {
+    color: #1ed760;
+  }
+  20% {
+    color: #ff8800;
+  }
+  50% {
+    color: #1da1f2;
+  }
+  80% {
+    color: #ff8800;
+  }
+  100% {
+    color: #1ed760;
+  }
+}
+@-ms-keyframes color-change {
+  0% {
+    color: #1ed760;
+  }
+  20% {
+    color: #ff8800;
+  }
+  50% {
+    color: #1da1f2;
+  }
+  80% {
+    color: #ff8800;
+  }
+  100% {
+    color: #1ed760;
+  }
+}
+@-o-keyframes color-change {
+  0% {
+    color: #1ed760;
+  }
+  20% {
+    color: #ff8800;
+  }
+  50% {
+    color: #1da1f2;
+  }
+  80% {
+    color: #ff8800;
+  }
+  100% {
+    color: #1ed760;
+  }
+}
+@keyframes color-change {
+  0% {
+    color: #1ed760;
+  }
+  20% {
+    color: #ff8800;
+  }
+  50% {
+    color: #1da1f2;
+  }
+  80% {
+    color: #ff8800;
+  }
+  100% {
+    color: #1ed760;
+  }
+}
