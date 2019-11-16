@@ -24,3 +24,5 @@ jobs:
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting:prod
+        env:
+          FIREBASE_TOKEN: 1//0988KyW6r8JiKCgYIARAAGAkSNwF-L9IrifoUJyaSw1Qwaz2cNDGBg2uIQevJY6nEzmmvJkzh6RsarF6Q06PCdlucgI2Q9_UdnS4
