@@ -14,10 +14,10 @@
         />
         <v-col cols="12" md="dr1s" lg="lul">
           <v-row justify="center" align="center">
-            <span class="display-1 font-weight-light my-6"
-              >DARIUS
-              <span class="rainbow font-weight-bold accent--text">dr1s</span>
-              TACK
+            <span class="display-1 font-weight-light my-3">
+              DARIUS TACK
+              <span class="display-2 font-weight-bold">//</span>
+              <span class="rainbow font-weight-bold">dr1s</span>
             </span>
           </v-row>
         </v-col>
@@ -40,7 +40,7 @@
             :key="medium.title"
             class="mx-2"
             :medium="medium"
-            :size="128"
+            :size="92"
           />
         </v-row>
       </v-col>
