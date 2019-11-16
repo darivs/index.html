@@ -8,18 +8,9 @@
     :min-height="`${size}px`"
     :min-width="`${size}px`"
     elevation="12"
-    :style="`opacity: ${isSpotify ? '0.75' : '1'};`"
+    :style="`opacity: ${isSpotify ? '0.25' : '1'};`"
   >
-    <v-img
-      :style="`opacity: ${isSpotify ? '0.75' : '1'};`"
-      :max-width="`${size * 0.6}px`"
-      :src="medium.logo"
-    />
-    <v-container v-show="isSpotify" class="overlay" fill-height>
-      <v-row justify="center" align="center">
-        <span class="title font-weight-regular accent--text">sOOn</span>
-      </v-row>
-    </v-container>
+    <v-img :max-width="`${size * 0.55}px`" :src="medium.logo" />
   </v-btn>
 </template>
 
@@ -43,12 +34,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.overlay {
-  position: absolute;
-  top: 0;
-  text-align: center;
-  pointer-events: none;
-}
-</style>
