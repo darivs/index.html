@@ -9,40 +9,46 @@
       <v-row justify="center">
         <v-hover v-slot:default="{ hover }">
           <v-img
-            :class="`dr1s transition elevation-12 ma-${hover ? '10' : '0'}`"
-            contain
-            :style="`transform: rotate(${hover ? '30' : '0'}deg);'}`"
+            :class="`dr1s transition elevation-12`"
+            :style="
+              `max-width: ${isLandscape ? '15%' : '50%'};
+              transform: rotate(${hover ? '90' : '0'}deg);`
+            "
             :src="require('~/static/dr1s.jpg')"
           />
         </v-hover>
-        <v-col cols="12" md="dr1s" lg="lul">
+        <v-col cols="12">
           <v-row justify="center" align="center">
-            <span class="display-1 font-weight-light my-3">
+            <span class="headline font-weight-light mt-5">
               DARIUS TACK
-              <span class="display-2 font-weight-bold">//</span>
-              <span class="rainbow font-weight-bold">dr1s</span>
             </span>
+          </v-row>
+        </v-col>
+        <v-col cols="12">
+          <v-row justify="center" align="center">
+            <span class="display-1 rainbow font-weight-bold mb-5">dr1s</span>
           </v-row>
         </v-col>
       </v-row>
     </v-col>
     <v-fade-transition hide-on-leave>
-      <v-col v-show="false" align-self="end">
+      <v-col v-show="!isLandscape" align-self="end">
         <social-button-block
           v-for="medium in media"
           :key="medium.title"
           :medium="medium"
+          class="mb-5"
         />
       </v-col>
     </v-fade-transition>
     <v-fade-transition hide-on-leave>
-      <v-col align-self="start">
+      <v-col v-show="isLandscape" align-self="start">
         <v-row justify="center">
           <social-button-round
             v-for="medium in media"
             :key="medium.title"
             :medium="medium"
-            :size="92"
+            :size="80"
           />
         </v-row>
       </v-col>
@@ -51,8 +57,8 @@
 </template>
 
 <script>
-import SocialButtonBlock from "../components/socialButtonBlock"
-import SocialButtonRound from "../components/socialButtonRound"
+import SocialButtonBlock from "../components/SocialButtonBlock"
+import SocialButtonRound from "../components/SocialButtonRound"
 
 export default {
   components: { SocialButtonRound, SocialButtonBlock },
@@ -102,15 +108,7 @@ export default {
   border-radius: 0 !important;
 }
 
-.container,
-.col,
-.row {
-  padding: 0;
-  margin: 0;
-}
-
 .dr1s {
-  max-width: 256px;
   border-radius: 100%;
   cursor: pointer;
 }
