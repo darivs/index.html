@@ -31,9 +31,9 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: dist
-      - name: Check invalidation of firebase token
+      - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy
         env:
-          FIREBASE_TOKEN: 1//0988KyW6r8JiKCgYIARAAGAkSNwF-L9IrifoUJyaSw1Qwaz2cNDGBg2uIQevJY6nEzmmvJkzh6RsarF6Q06PCdlucgI2Q9_UdnS4
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
