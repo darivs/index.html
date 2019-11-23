@@ -108,6 +108,13 @@ export default {
   border-radius: 0 !important;
 }
 
+.container,
+.col,
+.row {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 .dr1s {
   border-radius: 100%;
   cursor: pointer;
