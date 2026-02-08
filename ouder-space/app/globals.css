@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #07070a;
+  --color-fg: #f8f6ef;
+  --color-accent: #39ff14;
+  --color-accent-2: #ff4dd8;
+  --color-accent-3: #16a8ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 20%, #0f1225, #07070a 55%),
+    radial-gradient(circle at 80% 0%, #120818, transparent 45%),
+    var(--color-bg);
+  color: var(--color-fg);
+  font-family: "JetBrains Mono", monospace;
+  overflow-x: hidden;
+}
+
+.has-custom-cursor {
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  .has-custom-cursor {
+    cursor: auto;
+  }
+}
+
+.section-shell {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0c0f1c 0%, #07070a 60%, #110c1f 100%);
+  border-top: 2px solid rgba(248, 246, 239, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.section-shell::before {
+  content: "";
+  position: absolute;
+  inset: -25% -15% 35% -15%;
+  background: radial-gradient(circle at 30% 40%, #16a8ff80, transparent 50%),
+    radial-gradient(circle at 80% 10%, #ff4dd870, transparent 45%),
+    radial-gradient(circle at 60% 80%, #39ff1470, transparent 45%);
+  filter: blur(60px);
+  opacity: 0.9;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.section-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px
+    );
+  background-size: 90px 90px;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  z-index: 0;
+  pointer-events: none;
+}
+
+h1,
+h2,
+h3,
+.display {
+  font-family: "Archivo Black", sans-serif;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--color-accent-2);
+  color: var(--color-bg);
+}
+
+.section-title {
+  font-family: "Archivo Black", sans-serif;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  margin-bottom: 2rem;
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  background: var(--color-accent-3);
+  color: #020202;
+  box-shadow: 8px 8px 0 var(--color-accent-2);
+  transform: rotate(-1deg);
+}
+
+.card {
+  background: radial-gradient(circle at 20% 20%, #151627, #0e0e15 60%);
+  border: 3px solid var(--color-fg);
+  padding: 1rem;
+  box-shadow: 10px 10px 0 var(--color-accent);
+  transform: rotate(-1deg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: rotate(1deg) translateY(-4px);
+  box-shadow: 12px 14px 0 var(--color-accent-2);
+}
+
+.link-btn {
+  display: block;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  font-family: "Archivo Black", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  background: var(--color-fg);
+  color: var(--color-bg);
+  border: 3px solid var(--color-bg);
+  box-shadow: 8px 8px 0 var(--color-accent);
+  transform: rotate(-2deg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.link-btn:hover {
+  transform: rotate(1deg) translateY(-4px);
+  box-shadow: 12px 12px 0 var(--color-accent-2);
+  background: var(--color-accent-3);
+  color: #020202;
+}
+
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+}
