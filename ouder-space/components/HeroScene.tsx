@@ -50,46 +50,30 @@ function makeLogoTexture(label: string, color: string) {
   return tex;
 }
 
-function CrossMesh() {
-  const groupRef = useRef<THREE.Group>(null!);
-  const material = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: "#39ff14",
-        metalness: 0.2,
-        roughness: 0.3,
-        emissive: "#111111",
-        wireframe: true,
-      }),
-    [],
-  );
-  const armGeometry = useMemo(
-    () => new THREE.CylinderGeometry(0.55, 0.55, 4, 42, 1),
-    [],
-  );
+function TorusKnotMesh() {
+  const meshRef = useRef<THREE.Mesh>(null!);
+  const matRef = useRef<THREE.MeshStandardMaterial>(null!);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    groupRef.current.rotation.x = t * 0.3;
-    groupRef.current.rotation.y = t * 0.42;
-    material.color.setHSL((t * 0.05) % 1, 0.9, 0.6);
-    material.emissiveIntensity = 0.4 + Math.sin(t) * 0.2;
+    meshRef.current.rotation.x = t * 0.3;
+    meshRef.current.rotation.y = t * 0.42;
+    matRef.current.color.setHSL((t * 0.05) % 1, 0.9, 0.6);
+    matRef.current.emissiveIntensity = 0.4 + Math.sin(t) * 0.2;
   });
 
   return (
-    <group ref={groupRef}>
-      <mesh material={material} geometry={armGeometry} />
-      <mesh
-        material={material}
-        geometry={armGeometry}
-        rotation={[0, 0, Math.PI / 2]}
+    <mesh ref={meshRef}>
+      <torusKnotGeometry args={[1.2, 0.38, 200, 32]} />
+      <meshStandardMaterial
+        ref={matRef}
+        color="#39ff14"
+        metalness={0.2}
+        roughness={0.3}
+        emissive="#111111"
+        wireframe
       />
-      <mesh
-        material={material}
-        geometry={armGeometry}
-        rotation={[Math.PI / 2, 0, 0]}
-      />
-    </group>
+    </mesh>
   );
 }
 
@@ -144,6 +128,9 @@ function CameraRig() {
 
 function PlanetSwarm() {
   const groupRef = useRef<THREE.Group>(null!);
+  const ringGroupRefs = useRef<(THREE.Group | null)[]>(
+    new Array(socialLinks.length).fill(null),
+  );
   const [hovered, setHovered] = useState<number | null>(null);
   const [isPortrait, setIsPortrait] = useState(false);
   const pausedOffset = useRef<number[]>(new Array(socialLinks.length).fill(0));
@@ -182,9 +169,8 @@ function PlanetSwarm() {
       YouTube:
         "https://upload.wikimedia.org/wikipedia/commons/a/a0/YouTube_social_red_circle_%282017%29.svg",
       Instagram:
-        "https://images.icon-icons.com/1211/PNG/512/1491579602-yumminkysocialmedia36_83067.png",
-      GitHub:
-        "/github.svg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Instagram-Logo-Round-Color.png/500px-Instagram-Logo-Round-Color.png",
+      GitHub: "/github.svg",
     };
 
     loader.setCrossOrigin("anonymous");
@@ -211,7 +197,15 @@ function PlanetSwarm() {
       const bobSpeed = 0.9;
       const radialJitterAmp = 0.04;
       const radialJitterSpeed = 0.7;
-      const depthPhase = seeded(idx + 120) * Math.PI * 2;
+      const spinPhase = seeded(idx + 120) * Math.PI * 2;
+      const spinYSpeed = 0.9 + seeded(idx + 200) * 1.1;
+      const spinXSpeed = 0.8 + seeded(idx + 300) * 1.0;
+      const spinXAmplitude = 0.18 + seeded(idx + 400) * 0.2;
+      const ringBaseTilt = Math.PI / 2.8 + (seeded(idx + 500) - 0.5) * 0.45;
+      const ringSpinSpeed = 0.7 + seeded(idx + 600) * 1.8;
+      const ringWobbleSpeed = 0.6 + seeded(idx + 700) * 1.4;
+      const ringWobbleAmp = 0.04 + seeded(idx + 800) * 0.16;
+      const ringPhase = seeded(idx + 900) * Math.PI * 2;
       return {
         link,
         baseAngle,
@@ -221,7 +215,15 @@ function PlanetSwarm() {
         bobSpeed,
         radialJitterAmp,
         radialJitterSpeed,
-        depthPhase,
+        spinPhase,
+        spinYSpeed,
+        spinXSpeed,
+        spinXAmplitude,
+        ringBaseTilt,
+        ringSpinSpeed,
+        ringWobbleSpeed,
+        ringWobbleAmp,
+        ringPhase,
       };
     });
   }, []);
@@ -271,8 +273,18 @@ function PlanetSwarm() {
           : Math.sin(angle) * orbitRadius * jitter;
 
         mesh.position.set(x, y, z);
-        mesh.rotation.y += 0.01;
-        mesh.rotation.x += 0.008;
+        mesh.rotation.y = t * planet.spinYSpeed + planet.spinPhase;
+        mesh.rotation.x =
+          Math.sin(t * planet.spinXSpeed + planet.spinPhase) *
+          planet.spinXAmplitude;
+        const ringGroup = ringGroupRefs.current[idx];
+        if (ringGroup) {
+          ringGroup.rotation.x =
+            planet.ringBaseTilt +
+            Math.sin(t * planet.ringWobbleSpeed + planet.ringPhase) *
+              planet.ringWobbleAmp;
+          ringGroup.rotation.z = t * planet.ringSpinSpeed + planet.ringPhase;
+        }
         mesh.scale.setScalar(1.2 * scale);
         screenPos.set(x, y, z).project(camera);
         screenPositions.push({
@@ -307,8 +319,18 @@ function PlanetSwarm() {
         : Math.sin(angle) * orbitRadius * jitter;
 
       mesh.position.set(x, y, z);
-      mesh.rotation.y += 0.01;
-      mesh.rotation.x += 0.008;
+      mesh.rotation.y = t * planet.spinYSpeed + planet.spinPhase;
+      mesh.rotation.x =
+        Math.sin(t * planet.spinXSpeed + planet.spinPhase) *
+        planet.spinXAmplitude;
+      const ringGroup = ringGroupRefs.current[idx];
+      if (ringGroup) {
+        ringGroup.rotation.x =
+          planet.ringBaseTilt +
+          Math.sin(t * planet.ringWobbleSpeed + planet.ringPhase) *
+            planet.ringWobbleAmp;
+        ringGroup.rotation.z = t * planet.ringSpinSpeed + planet.ringPhase;
+      }
       mesh.scale.setScalar(hovered === idx ? 1.2 * scale : 1 * scale);
       lastAngles.current[idx] = angle;
       lastTimes.current[idx] = effectiveTime;
@@ -327,7 +349,7 @@ function PlanetSwarm() {
 
   return (
     <group ref={groupRef}>
-      {planets.map(({ link }, idx) => (
+      {planets.map(({ link, ringBaseTilt }, idx) => (
         <mesh
           key={link.label}
           onClick={() => window.open(link.href, "_blank", "noreferrer")}
@@ -335,80 +357,49 @@ function PlanetSwarm() {
           onPointerOut={() => setHovered((h) => (h === idx ? null : h))}
           castShadow
         >
-          {link.label === "GitHub" ? (
-            <>
-              {/* flat hit target so interactions still work */}
-              <planeGeometry args={[0.9, 0.9]} />
-              <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-              {logoTextures[idx] && (
-                <sprite scale={[0.7, 0.7, 0.7]}>
-                  <spriteMaterial
-                    map={logoTextures[idx] as THREE.Texture}
-                    depthTest={false}
-                    depthWrite={false}
-                  />
-                </sprite>
-              )}
-              {/* subtle outer ring to match others without 3D sphere */}
-              <group rotation={[Math.PI / 2.8, 0, 0]}>
-                <mesh scale={1.6}>
-                  <ringGeometry args={[0.32, 0.44, 64]} />
-                  <meshBasicMaterial
-                    color="#f8f6ef"
-                    transparent
-                    opacity={0.22}
-                    side={THREE.DoubleSide}
-                  />
-                </mesh>
-                <mesh scale={1.9}>
-                  <ringGeometry args={[0.44, 0.48, 64]} />
-                  <meshBasicMaterial
-                    color={link.color}
-                    transparent
-                    opacity={0.18}
-                    side={THREE.DoubleSide}
-                  />
-                </mesh>
-              </group>
-            </>
-          ) : (
-            <>
-              {/* invisible hit target so clicks/hover still work */}
+          <>
+            {/* invisible hit target so clicks/hover still work */}
+            <sphereGeometry args={[0.26, 16, 16]} />
+            <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+
+            {/* 2D logo sprite, always facing camera */}
+            {logoTextures[idx] && (
+              <sprite scale={[0.6, 0.6, 0.6]}>
+                <spriteMaterial
+                  map={logoTextures[idx] as THREE.Texture}
+                  depthTest={false}
+                  depthWrite={false}
+                />
+              </sprite>
+            )}
+
+            {/* halo for glow */}
+            <mesh scale={0.9}>
               <sphereGeometry args={[0.26, 16, 16]} />
-              <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-
-              {/* 2D logo sprite, always facing camera */}
-              {logoTextures[idx] && (
-                <sprite scale={[0.6, 0.6, 0.6]}>
-                  <spriteMaterial
-                    map={logoTextures[idx] as THREE.Texture}
-                    depthTest={false}
-                    depthWrite={false}
-                  />
-                </sprite>
-              )}
-
-              {/* halo for glow */}
-              <mesh scale={0.9}>
-                <sphereGeometry args={[0.26, 16, 16]} />
+              <meshBasicMaterial
+                color={link.color}
+                transparent
+                opacity={0.14}
+                depthWrite={false}
+                side={THREE.BackSide}
+              />
+            </mesh>
+            <group
+              ref={(el) => {
+                ringGroupRefs.current[idx] = el;
+              }}
+              rotation={[ringBaseTilt, 0, 0]}
+            >
+              <mesh scale={1.8}>
+                <ringGeometry args={[0.26, 0.32, 48]} />
                 <meshBasicMaterial
                   color={link.color}
                   transparent
-                  opacity={0.14}
-                  depthWrite={false}
-                  side={THREE.BackSide}
+                  opacity={0.42}
+                  side={THREE.DoubleSide}
                 />
               </mesh>
-              <group rotation={[Math.PI / 2.8, 0, 0]}>
-                <mesh scale={1.8}>
-                  <ringGeometry args={[0.26, 0.32, 48]} />
-                  <meshBasicMaterial
-                    color={link.color}
-                    transparent
-                    opacity={0.42}
-                    side={THREE.DoubleSide}
-                  />
-                </mesh>
+              {hovered === idx && (
                 <mesh scale={2.1}>
                   <ringGeometry args={[0.32, 0.34, 64]} />
                   <meshBasicMaterial
@@ -418,9 +409,9 @@ function PlanetSwarm() {
                     side={THREE.DoubleSide}
                   />
                 </mesh>
-              </group>
-            </>
-          )}
+              )}
+            </group>
+          </>
         </mesh>
       ))}
     </group>
@@ -433,7 +424,7 @@ export default function HeroScene() {
       <color attach="background" args={["#050507"]} />
       <ambientLight intensity={0.5} />
       <pointLight position={[3, 4, 4]} color="#ff00ff" intensity={1.6} />
-      <CrossMesh />
+      <TorusKnotMesh />
       <PlanetSwarm />
       <ParticleField />
       <CameraRig />
